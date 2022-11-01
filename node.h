@@ -4,20 +4,17 @@
 #include <QPoint>
 class Node
 {
-    int info;
-    QPointF coord;
+    int m_Info;
+    QPointF m_Coord;
 public:
     Node(int inf = -1);
     Node(QPointF cood, int inf = -1);
-    void setInfo(int inf){info = inf;}
-    QPointF getCoordinate(){return coord;}
-    void setCoordinate(QPointF cood){coord=cood;}
-    int getInfo(){return info;}
-    float distance(QPointF node)
-    {
-        return sqrt(pow(this->coord.x()-node.x(),2)+pow(this->coord.y()-node.y(),2));
-    }
-    //functie pentru distanta dintre 2 noduri
+    void SetInfo(int inf){m_Info = inf;}
+    QPointF GetCoordinate(){return m_Coord;}
+    void SetCoordinate(QPointF cood){m_Coord=cood;}
+    int GetInfo(){return m_Info;}
+    float Distance(QPointF node);
+
 };
 
 #endif // NODE_H

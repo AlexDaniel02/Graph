@@ -17,29 +17,29 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
     {
         bool ok=true;
         Node n(ev->position());
-        for(Node& node: graph.getNodes())
+        for(Node& node: graph.GetNodes())
         {
-            if(node.distance(n.getCoordinate())<nodeRadius*2)
+            if(node.Distance(n.GetCoordinate())<nodeRadius*2)
             {
                 ok=false;
             }
         }
         if(ok==true)
         {
-            n.setInfo(graph.getNumberOfNodes() + 1);
-            graph.addNode(n);
-            graph.updateAdjacencyMatrix();
+            n.SetInfo(graph.GetNumberOfNodes() + 1);
+            graph.AddNode(n);
+            graph.UpdateAdjacencyMatrix();
             update();
         }
     }
     else if (ev->button() == Qt::LeftButton)
     {
-        vector<Node> nodes = graph.getNodes();
+        vector<Node> nodes = graph.GetNodes();
         Node selected;
         bool ok=false;
         for(Node& n: nodes)
         {
-            if (n.distance(ev->position()) <= nodeRadius)
+            if (n.Distance(ev->position()) <= nodeRadius)
             {
                 selected = n;
                 ok = true;
@@ -55,17 +55,17 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
             }
             else
             {
-                for(Edge& edge:graph.getEdges())
+                for(Edge& edge:graph.GetEdges())
                 {
-                    if(edge.getFirstNode().getCoordinate().x()==firstNode.getCoordinate().x()&&edge.getFirstNode().getCoordinate().y()==firstNode.getCoordinate().y()&&edge.getSecondNode().getCoordinate().x()==selected.getCoordinate().x()&&edge.getSecondNode().getCoordinate().y()==selected.getCoordinate().y())
+                    if(edge.getFirstNode().GetCoordinate().x()==firstNode.GetCoordinate().x()&&edge.getFirstNode().GetCoordinate().y()==firstNode.GetCoordinate().y()&&edge.getSecondNode().GetCoordinate().x()==selected.GetCoordinate().x()&&edge.getSecondNode().GetCoordinate().y()==selected.GetCoordinate().y())
                     {
                         isFirstNode=false;
                         return;
                     }
                 }
-                graph.addEdge(Edge(firstNode, selected));
+                graph.AddEdge(Edge(firstNode, selected));
                 isFirstNode= false;
-                graph.updateAdjacencyMatrix();
+                graph.UpdateAdjacencyMatrix();
                 update();
             }
         }
@@ -78,29 +78,29 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
 void MainWindow::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
-    vector<Node> nodes = graph.getNodes();
+    vector<Node> nodes = graph.GetNodes();
     for(Node& n:nodes)
     {
-        QPointF coord = n.getCoordinate();
+        QPointF coord = n.GetCoordinate();
         QRect r(coord.x() - nodeRadius, coord.y()- nodeRadius,
                 2*nodeRadius, 2*nodeRadius);
         QPen pen;
         pen.setColor(Qt::red);
         p.setPen(pen);
         p.drawEllipse(r);
-        QString num = QString::number(n.getInfo());
+        QString num = QString::number(n.GetInfo());
         p.drawText(r, Qt::AlignCenter, num);
     }
-    vector<Edge> edges = graph.getEdges();
+    vector<Edge> edges = graph.GetEdges();
     for(Edge& e:edges)
     {
-        QLineF line(e.getFirstNode().getCoordinate(),e.getSecondNode().getCoordinate());
+        QLineF line(e.getFirstNode().GetCoordinate(),e.getSecondNode().GetCoordinate());
         p.drawLine(line);
-        if(!graph.getGraphType())
+        if(!graph.GetGraphType())
         {
             QLineF arrowLine1,arrowLine2;
-            arrowLine1.setP1(e.getSecondNode().getCoordinate());
-            arrowLine2.setP1(e.getSecondNode().getCoordinate());
+            arrowLine1.setP1(e.getSecondNode().GetCoordinate());
+            arrowLine2.setP1(e.getSecondNode().GetCoordinate());
             arrowLine1.setLength(nodeRadius*2);
             arrowLine2.setLength(nodeRadius*2);
             arrowLine1.setAngle(line.angle()+150);
@@ -114,14 +114,14 @@ void MainWindow::on_radioButton_released()
 {
     if(ui->radioButton->isChecked())
     {
-        graph.setUndirected(true);
-        graph.updateAdjacencyMatrix();
+        graph.SetUndirected(true);
+        graph.UpdateAdjacencyMatrix();
         update();
     }
     else
     {
-        graph.setUndirected(false);
-        graph.updateAdjacencyMatrix();
+        graph.SetUndirected(false);
+        graph.UpdateAdjacencyMatrix();
         update();
     }
 }
@@ -129,17 +129,17 @@ void MainWindow::mouseMoveEvent(QMouseEvent *ev)
 {
     if(ev->buttons()==Qt::LeftButton)
     {
-        vector<Node> nodes =graph.getNodes();
+        vector<Node> nodes =graph.GetNodes();
         for(Node& n:nodes){
 
 
-            if(n.distance(ev->position()) <  nodeRadius){
-                n.setCoordinate(ev->position());
+            if(n.Distance(ev->position()) <  nodeRadius){
+                n.SetCoordinate(ev->position());
                 break;
             }
         }
-        graph.setNodes(nodes);
-        graph.updateEdges();
+        graph.SetNodes(nodes);
+        graph.UpdateEdges();
         update();
     }
 }
