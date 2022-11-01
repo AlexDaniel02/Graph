@@ -127,7 +127,7 @@ void MainWindow::on_radioButton_released()
 }
 void MainWindow::mouseMoveEvent(QMouseEvent *ev)
 {
-    if(ev->buttons()==Qt::LeftButton)
+    if(ev->buttons()==Qt::RightButton)
     {
         vector<Node> nodes =graph.GetNodes();
         for(Node& n:nodes){
