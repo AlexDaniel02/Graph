@@ -6,9 +6,9 @@ void Graph::AddEdge(Edge a) {m_edges.push_back(a);}
 
 int Graph::GetNumberOfNodes(){return m_nodes.size();}
 
-vector<Node> Graph::GetNodes() {return  m_nodes;}
+std::vector<Node> Graph::GetNodes() {return  m_nodes;}
 
-vector<Edge> Graph::GetEdges(){return m_edges;}
+std::vector<Edge> Graph::GetEdges(){return m_edges;}
 
 void Graph::UpdateAdjacencyMatrix()
 {
@@ -22,7 +22,6 @@ void Graph::UpdateAdjacencyMatrix()
         if(!m_isDirected)
         {
         m_adjacencyMatrix[edge.GetSecondNode().GetInfo()-1][edge.GetFirstNode().GetInfo()-1]=1;
-
         }
     }
     PrintMatrix();
@@ -30,15 +29,15 @@ void Graph::UpdateAdjacencyMatrix()
 
 void Graph::PrintMatrix()
 {
-    ofstream output("output.txt");
+    std::ofstream output("output.txt");
     if(output.is_open())
     {
-        output<<(int)m_nodes.size()<<endl;
+        output<<(int)m_nodes.size()<<std::endl;
         for(int i=0;i<(int)m_nodes.size();i++)
         {
             for(int j=0;j<(int)m_nodes.size();j++)
                 output<<m_adjacencyMatrix[i][j]<<" ";
-            output<<endl;
+            output<<std::endl;
         }
     }
     output.close();
@@ -54,7 +53,7 @@ bool Graph::GetGraphType()
     return m_isDirected;
 }
 
-void Graph::SetNodes(vector<Node> nodesVec)
+void Graph::SetNodes(std::vector<Node> nodesVec)
 {
     m_nodes=nodesVec;
 }

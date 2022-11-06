@@ -9,7 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     isFirstNode = false;
-
 }
 void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
 {
@@ -34,7 +33,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
     }
     else if (ev->button() == Qt::LeftButton)
     {
-        vector<Node> nodes = graph.GetNodes();
+        std::vector<Node> nodes = graph.GetNodes();
         Node selected;
         bool ok=false;
         for(Node& n: nodes)
@@ -82,7 +81,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
 void MainWindow::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
-    vector<Node> nodes = graph.GetNodes();
+   std::vector<Node> nodes = graph.GetNodes();
     for(Node& n:nodes)
     {
         QPointF coord = n.GetCoordinate();
@@ -95,7 +94,7 @@ void MainWindow::paintEvent(QPaintEvent *)
         QString num = QString::number(n.GetInfo());
         p.drawText(r, Qt::AlignCenter, num);
     }
-    vector<Edge> edges = graph.GetEdges();
+    std::vector<Edge> edges = graph.GetEdges();
     for(Edge& e:edges)
     {
         QLineF line(e.GetFirstNode().GetCoordinate(),e.GetSecondNode().GetCoordinate());
@@ -133,7 +132,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *ev)
 {
     if(ev->buttons()==Qt::RightButton)
     {
-        vector<Node> nodes =graph.GetNodes();
+        std::vector<Node> nodes =graph.GetNodes();
         for(Node& n:nodes)
         {
             if(n.Distance(ev->position()) <  nodeRadius)
