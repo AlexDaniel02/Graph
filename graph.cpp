@@ -1,27 +1,27 @@
 #include "graph.h"
 
-void Graph::AddNode(Node n) {m_Nodes.push_back(n);}
+void Graph::AddNode(Node n) {m_nodes.push_back(n);}
 
-void Graph::AddEdge(Edge a) {m_Edges.push_back(a);}
+void Graph::AddEdge(Edge a) {m_edges.push_back(a);}
 
-int Graph::GetNumberOfNodes(){return (int)m_Nodes.size();}
+int Graph::GetNumberOfNodes(){return m_nodes.size();}
 
-vector<Node> Graph::GetNodes() {return  m_Nodes;}
+vector<Node> Graph::GetNodes() {return  m_nodes;}
 
-vector<Edge> Graph::GetEdges(){return m_Edges;}
+vector<Edge> Graph::GetEdges(){return m_edges;}
 
 void Graph::UpdateAdjacencyMatrix()
 {
-    m_AdjacencyMatrix.resize(GetNumberOfNodes());
+    m_adjacencyMatrix.resize(GetNumberOfNodes());
     for(int i=0;i<GetNumberOfNodes();i++)
         for(int j=0;j<GetNumberOfNodes();j++)
-            m_AdjacencyMatrix[i].push_back(0);
+            m_adjacencyMatrix[i].push_back(0);
     for(Edge& edge:GetEdges())
     {
-        m_AdjacencyMatrix[edge.getFirstNode().GetInfo()-1][edge.getSecondNode().GetInfo()-1]=1;
-        if(m_IsUndirected)
+        m_adjacencyMatrix[edge.GetFirstNode().GetInfo()-1][edge.GetSecondNode().GetInfo()-1]=1;
+        if(!m_isDirected)
         {
-            m_AdjacencyMatrix[edge.getSecondNode().GetInfo()-1][edge.getFirstNode().GetInfo()-1]=1;
+        m_adjacencyMatrix[edge.GetSecondNode().GetInfo()-1][edge.GetFirstNode().GetInfo()-1]=1;
 
         }
     }
@@ -33,46 +33,46 @@ void Graph::PrintMatrix()
     ofstream output("output.txt");
     if(output.is_open())
     {
-        output<<(int)m_Nodes.size()<<endl;
-        for(int i=0;i<(int)m_Nodes.size();i++)
+        output<<(int)m_nodes.size()<<endl;
+        for(int i=0;i<(int)m_nodes.size();i++)
         {
-            for(int j=0;j<(int)m_Nodes.size();j++)
-                output<<m_AdjacencyMatrix[i][j]<<" ";
+            for(int j=0;j<(int)m_nodes.size();j++)
+                output<<m_adjacencyMatrix[i][j]<<" ";
             output<<endl;
         }
     }
     output.close();
 }
 
-void Graph::SetUndirected(bool condition)
+void Graph::SetDirected(bool condition)
 {
-    m_IsUndirected=condition;
+    m_isDirected=condition;
 }
 
 bool Graph::GetGraphType()
 {
-    return m_IsUndirected;
+    return m_isDirected;
 }
 
 void Graph::SetNodes(vector<Node> nodesVec)
 {
-    m_Nodes=nodesVec;
+    m_nodes=nodesVec;
 }
 
 void Graph::UpdateEdges()
 {
-    m_Edges.clear();
+    m_edges.clear();
     for(int i=0;i<GetNumberOfNodes();i++)
     {
         for(int j=0;j<GetNumberOfNodes();j++)
         {
-            if(m_AdjacencyMatrix[i][j]==1){
-                if(m_IsUndirected==false)
-                    m_Edges.emplace_back(m_Nodes[i],m_Nodes[j]);
+            if(m_adjacencyMatrix[i][j]==1){
+                if(m_isDirected==true)
+                    m_edges.emplace_back(m_nodes[i],m_nodes[j]);
                 else
                 {
-                    m_Edges.emplace_back(m_Nodes[i],m_Nodes[j]);
-                    m_Edges.emplace_back(m_Nodes[j],m_Nodes[i]);
+                    m_edges.emplace_back(m_nodes[i],m_nodes[j]);
+                    m_edges.emplace_back(m_nodes[j],m_nodes[i]);
                 }
             }
 

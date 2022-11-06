@@ -4,11 +4,11 @@
 
 class Edge
 {
-    Node m_FirstNode, m_SecondNode;
+    Node m_firstNode, m_secondNode;
 public:
     Edge()=default;
     Edge(Node fN, Node sN);
-    Node getFirstNode();
-    Node getSecondNode();
+    Node GetFirstNode();
+    Node GetSecondNode();
 };
 #endif // EDGE_H

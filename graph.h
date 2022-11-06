@@ -8,20 +8,20 @@
 using namespace std;
 class Graph
 {
-    vector<Node> m_Nodes;
-    vector<Edge> m_Edges;
-    vector<vector<int>> m_AdjacencyMatrix;
-    bool m_IsUndirected=false;
+    vector<Node> m_nodes;
+    vector<Edge> m_edges;
+    vector<vector<int>> m_adjacencyMatrix;
+    bool m_isDirected=false;
 public:
     Graph()=default;
     void AddNode(Node n);
     void AddEdge(Edge a);
     int GetNumberOfNodes();
-    vector<Node>GetNodes();
+    vector<Node> GetNodes();
     vector<Edge> GetEdges();
     void UpdateAdjacencyMatrix();
     void PrintMatrix();
-    void SetUndirected(bool condition);
+    void SetDirected(bool condition);
     bool GetGraphType();
     void SetNodes(vector <Node> nodesVec);
     void UpdateEdges();

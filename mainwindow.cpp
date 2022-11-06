@@ -17,7 +17,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
     {
         bool ok=true;
         Node n(ev->position());
-        for(Node& node: graph.GetNodes())
+        for(Node node: graph.GetNodes())
         {
             if(node.Distance(n.GetCoordinate())<nodeRadius*2)
             {
@@ -57,11 +57,15 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
             {
                 for(Edge& edge:graph.GetEdges())
                 {
-                    if(edge.getFirstNode().GetCoordinate().x()==firstNode.GetCoordinate().x()&&edge.getFirstNode().GetCoordinate().y()==firstNode.GetCoordinate().y()&&edge.getSecondNode().GetCoordinate().x()==selected.GetCoordinate().x()&&edge.getSecondNode().GetCoordinate().y()==selected.GetCoordinate().y())
+                    if(edge.GetFirstNode().GetCoordinate().x()==firstNode.GetCoordinate().x()&&edge.GetFirstNode().GetCoordinate().y()==firstNode.GetCoordinate().y()&&edge.GetSecondNode().GetCoordinate().x()==selected.GetCoordinate().x()&&edge.GetSecondNode().GetCoordinate().y()==selected.GetCoordinate().y())
                     {
                         isFirstNode=false;
                         return;
                     }
+                }
+                if(firstNode.Distance(selected.GetCoordinate())==0 && graph.GetGraphType()==false)
+                {
+                    return;
                 }
                 graph.AddEdge(Edge(firstNode, selected));
                 isFirstNode= false;
@@ -94,13 +98,13 @@ void MainWindow::paintEvent(QPaintEvent *)
     vector<Edge> edges = graph.GetEdges();
     for(Edge& e:edges)
     {
-        QLineF line(e.getFirstNode().GetCoordinate(),e.getSecondNode().GetCoordinate());
+        QLineF line(e.GetFirstNode().GetCoordinate(),e.GetSecondNode().GetCoordinate());
         p.drawLine(line);
-        if(!graph.GetGraphType())
+        if(graph.GetGraphType())
         {
             QLineF arrowLine1,arrowLine2;
-            arrowLine1.setP1(e.getSecondNode().GetCoordinate());
-            arrowLine2.setP1(e.getSecondNode().GetCoordinate());
+            arrowLine1.setP1(e.GetSecondNode().GetCoordinate());
+            arrowLine2.setP1(e.GetSecondNode().GetCoordinate());
             arrowLine1.setLength(nodeRadius*2);
             arrowLine2.setLength(nodeRadius*2);
             arrowLine1.setAngle(line.angle()+150);
@@ -114,13 +118,13 @@ void MainWindow::on_radioButton_released()
 {
     if(ui->radioButton->isChecked())
     {
-        graph.SetUndirected(true);
+        graph.SetDirected(true);
         graph.UpdateAdjacencyMatrix();
         update();
     }
     else
     {
-        graph.SetUndirected(false);
+        graph.SetDirected(false);
         graph.UpdateAdjacencyMatrix();
         update();
     }
@@ -130,17 +134,17 @@ void MainWindow::mouseMoveEvent(QMouseEvent *ev)
     if(ev->buttons()==Qt::RightButton)
     {
         vector<Node> nodes =graph.GetNodes();
-        for(Node& n:nodes){
-
-
-            if(n.Distance(ev->position()) <  nodeRadius){
+        for(Node& n:nodes)
+        {
+            if(n.Distance(ev->position()) <  nodeRadius)
+            {
                 n.SetCoordinate(ev->position());
+                graph.SetNodes(nodes);
+                graph.UpdateEdges();
+                update();
                 break;
             }
         }
-        graph.SetNodes(nodes);
-        graph.UpdateEdges();
-        update();
     }
 }
 MainWindow::~MainWindow()

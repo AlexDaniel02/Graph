@@ -2,15 +2,15 @@
 
 Edge::Edge(Node fN, Node sN)
 {
-    m_FirstNode = fN;
-    m_SecondNode = sN;
+    m_firstNode = fN;
+    m_secondNode = sN;
 }
 
-Node Edge::getFirstNode()
+Node Edge::GetFirstNode()
 {
-    return m_FirstNode;
+    return m_firstNode;
 }
-Node Edge::getSecondNode()
+Node Edge::GetSecondNode()
 {
-    return m_SecondNode;
+    return m_secondNode;
 }
