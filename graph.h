@@ -1,6 +1,5 @@
 #ifndef GRAPH_H
 #define GRAPH_H
-
 #include "edge.h"
 #include <vector>
 #include <fstream>
