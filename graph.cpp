@@ -21,7 +21,7 @@ void Graph::UpdateAdjacencyMatrix()
         m_adjacencyMatrix[edge.GetFirstNode().GetInfo()-1][edge.GetSecondNode().GetInfo()-1]=1;
         if(!m_isDirected)
         {
-        m_adjacencyMatrix[edge.GetSecondNode().GetInfo()-1][edge.GetFirstNode().GetInfo()-1]=1;
+            m_adjacencyMatrix[edge.GetSecondNode().GetInfo()-1][edge.GetFirstNode().GetInfo()-1]=1;
         }
     }
     PrintMatrix();

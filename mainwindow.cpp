@@ -16,7 +16,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
     {
         bool ok=true;
         Node n(ev->position());
-        for(Node node: graph.GetNodes())
+        for(Node& node: graph.GetNodes())
         {
             if(node.Distance(n.GetCoordinate())<nodeRadius*2)
             {
@@ -81,7 +81,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *ev)
 void MainWindow::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
-   std::vector<Node> nodes = graph.GetNodes();
+    std::vector<Node> nodes = graph.GetNodes();
     for(Node& n:nodes)
     {
         QPointF coord = n.GetCoordinate();
